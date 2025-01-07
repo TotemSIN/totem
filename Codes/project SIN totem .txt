@@ -1,0 +1,8 @@
+ Tâches :
+- Faire fonctionner les 3 afficheurs ensemble
+- Programme Python pour le capteur de pédalier
+- Pièce 3D boites
+- Finir boitier d'alimentation + tests
+- Programme combinant tout
+- Finir le site web
+- 2ème boitier d'alimentation
