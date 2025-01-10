@@ -1,0 +1,10 @@
+A faire:
+- faire fonctionner les 3 afficheurs ensembles.
+- Programme python, capteur pédalier
+- Programme qui combine tout
+
+En cour:
+- Finir boite alim + tests
+- Finir site web
+- Pièce 3D boite
+- 2ème alim
