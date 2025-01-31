@@ -2,8 +2,9 @@ int randomNumber, randomBis;
 int centaine, dizaine, unite;
 int old_c, old_d, old_u;
 int pinState, startingPin;
-int value, oldvalue;
-
+int value = 0;
+int oldvalue = 0;
+String read;
 void setup() {
   // Initialize pins 2, 3, 4, 5 as outputs
   for (int pin = 0; pin <= 13; pin++) {
@@ -18,36 +19,31 @@ void setup() {
 }
 
 void loop() {
-
-  String read = Serial.readStringUntil("/n");
   if (Serial.available() > 0) {
-    String read = Serial.readStringUntil("/n");
+    read = Serial.readStringUntil('\n');
+    read.trim();
+    value = read.toInt();
+    if (value != oldvalue) {
+      oldvalue = value;
+      randomNumber = value;
+      centaine = randomNumber / 100;
+      dizaine = (randomNumber / 10) % 10;
+      unite = randomNumber % 10;
 
+      if (unite != old_u) {
+        setPinsForNumber(unite, 1);
+        old_u = unite;
+      }
+      if (dizaine != old_d) {
+        setPinsForNumber(dizaine, 2);
+        old_d = dizaine;
+      }
+      if (centaine != old_c) {
+        setPinsForNumber(centaine, 3);
+        old_c = centaine;
+      }
+    }
   }
-
-  value = read.toInt();
-  if (value != oldvalue && value != 000) {
-    oldvalue = value;
-    randomNumber = oldvalue;
-    centaine = randomNumber / 100;
-    dizaine = (randomNumber / 10) % 10;
-    unite = randomNumber % 10;
-
-    if (unite != old_u) {
-      setPinsForNumber(unite, 1);
-      old_u = unite;
-    }
-    if (dizaine != old_d) {
-      setPinsForNumber(dizaine, 2);
-      old_d = dizaine;
-    }
-    if (centaine != old_c) {
-      setPinsForNumber(centaine, 3);
-      old_c = centaine;
-    }
-  }
-
-  delay(1000 / 120);
 }
 
 // 157 -> 
@@ -66,10 +62,4 @@ void setPinsForNumber(int number, int segment) {
     pinState = (number >> i) & 1; // Extract the i-th bit
     digitalWrite(i + startingPin, pinState); // Set the corresponding pin (2, 3, 4, 5)
   }
-  delay(200);
-  Serial.print("Segment: ");
-  Serial.println(segment);
-  
-  Serial.print("Valeur: ");
-  Serial.println(number);
 }
