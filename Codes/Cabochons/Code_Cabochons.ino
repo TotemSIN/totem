@@ -1,17 +1,17 @@
 #include <Adafruit_NeoPixel.h>
 
 #define PIN 3 // Pin où est connecté le strip NeoPixel
-#define NUM_LEDS 7  // Nombre de LEDs
+#define NUM_LEDS 4  // Nombre de LEDs
 
-// Configuration de la bande LED (NeoPixel)
+
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_RGB + NEO_KHZ800);
 
 int acquis_donnees = 0;
 
 void setup() {
-  strip.begin(); // Initialisation du strip
-  strip.setBrightness(50); // Luminosité initiale (0-255)
-  strip.show(); // S'assurer que toutes les LEDs sont éteintes au départ
+  strip.begin();
+  strip.setBrightness(50); 
+  strip.show(); 
   Serial.begin(9600);
   Serial.println("Appuyez sur 1 pour garder en violet, 2 pour le fade, 3 pour le 3 par 3 :");
 
@@ -40,9 +40,9 @@ void loop() {
 
 }
 
-// Fonction pour calculer une intensité sinusoïdale
+
 static uint8_t sine8(uint8_t x) {
-  return pgm_read_byte(&_NeoPixelSineTable[x]); // Entrée/sortie entre 0-255
+  return pgm_read_byte(&_NeoPixelSineTable[x]); 
 }
 
 void mettre_en_violet(){
@@ -57,23 +57,23 @@ void mettre_en_violet(){
 }
 
 void random_fade(){
-// Animation du dégradé coloré
-  for (uint8_t i = 0; i < 255; i++) {
-    // Calculer les couleurs pour chaque LED
-    for (int ledNumber = 0; ledNumber < NUM_LEDS; ledNumber++) {
-      // Ajuster la phase pour chaque LED pour un dégradé fluide
-      uint8_t offset = ledNumber * 85; // Décalage de phase pour 3 LEDs
-      uint8_t red = sine8(i + offset);      // Composante rouge
-      uint8_t green = sine8(i + offset + 85);  // Composante verte
-      uint8_t blue = sine8(i + offset + 170); // Composante bleue
 
-      // Appliquer la couleur calculée
+  for (uint8_t i = 0; i < 255; i++) {
+
+    for (int ledNumber = 0; ledNumber < NUM_LEDS; ledNumber++) {
+
+      uint8_t offset = ledNumber * 85; 
+      uint8_t red = sine8(i + offset);    
+      uint8_t green = sine8(i + offset + 85); 
+      uint8_t blue = sine8(i + offset + 170); 
+
+    
       strip.setPixelColor(ledNumber, red, green, blue);
     }
 
-    // Mettre à jour le strip LED
+   
     strip.show();
-    delay(3); // Attente pour un effet fluide
+    delay(3); 
   }
 
 }
@@ -104,3 +104,4 @@ void trwa_par_trwa(){
 
 
 }
+
