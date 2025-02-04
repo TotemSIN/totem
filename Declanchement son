@@ -1,0 +1,2 @@
+commande pour créer un port serie virtuel :
+socat -d -d pty,raw,echo=0,link=/dev/ttyV0 pty,raw,echo=0,link=/dev/ttyV1
